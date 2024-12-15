@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Karen Mantilla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #D8B4FE, #EDE7F6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            background: linear-gradient(to right, #6A1B9A, #AB47BC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #4E4E4E;
+            font-size: 1.2rem;
+            margin: 10px 0 30px;
+            text-align: center;
+        }
+
+        .password-area {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .password-area input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #CE93D8;
+            border-radius: 12px;
+            background-color: #F3E5F5;
+            color: #4A4A4A;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            width: 250px;
+        }
+
+        .password-area input:focus {
+            border-color: #8E24AA;
+            box-shadow: 0 0 8px rgba(142, 36, 170, 0.5);
+        }
+
+        .password-area button {
+            padding: 10px 25px;
+            margin-left: 10px;
+            font-size: 1rem;
+            background: linear-gradient(to right, #8E24AA, #CE93D8);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .password-area button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(142, 36, 170, 0.4);
+        }
+
+        .game-area {
+            display: none;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background: linear-gradient(to bottom right, #FFF8E1, #FFE0B2);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(187, 134, 252, 0.3), rgba(0, 0, 0, 0));
+            animation: card-glow 5s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes card-glow {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .card.clicked {
+            animation: card-click-glow 1s forwards;
+        }
+
+        @keyframes card-click-glow {
+            0% {
+                box-shadow: 0 0 10px rgba(142, 36, 170, 1), 0 0 20px rgba(142, 36, 170, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(142, 36, 170, 1), 0 0 40px rgba(142, 36, 170, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(142, 36, 170, 1), 0 0 20px rgba(142, 36, 170, 0.8);
+            }
+        }
+
+        .card img {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .card.hidden {
+            background: linear-gradient(to top, #D1C4E9, #B39DDB);
+            color: transparent;
+        }
+
+        .card.revealed {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #4A4A4A;
+            text-align: center;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #4A4A4A;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .sun {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #FFD700 60%, #FFA500 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        .moon {
+            width: 80px;
+            height: 80px;
+            background: #F5F5F5;
+            border-radius: 50%;
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            box-shadow: -10px -10px 0 rgba(201, 201, 201, 0.6);
+        }
+
+        .moon::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: #E0E0E0;
+            border-radius: 50%;
+            position: absolute;
+            top: 20%;
+            left: 20%;
+        }
+
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(to right, #FF6F61, #FF8A65);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .logout-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 105, 97, 0.4);
+        }
+
+        .card span {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6A1B9A;
+        }
+    </style>
+</head>
+<body>
+    <audio autoplay loop>
+        <source src="miluna.mp3" type="audio/mp3">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <div class="sun"></div>
+    <div class="moon"></div>
+
+    <button class="logout-button" onclick="logout()">Cerrar sesión</button>
+
+    <h1>Sol y Luna</h1>
+    <p>Introduce la clave para descubrir mensajes especiales:</p>
+    <div class="password-area">
+        <input type="password" id="password" placeholder="Escribe la clave">
+        <button onclick="checkPassword()">Entrar</button>
+    </div>
+    <div class="game-area">
+        <div class="card hidden" onclick="toggleMessage(this, 'K', 'Tu luz ilumina el camino de quienes te rodean, incluso cuando no lo ves.')">
+            <span>K</span>
+        </div>
+        <div class="card hidden" onclick="toggleMessage(this, 'A', 'Eres más fuerte de lo que imaginas, y tu valentía inspira a otros a seguir adelante.')">
+            <span>A</span>
+        </div>
+        <div class="card hidden" onclick="toggleMessage(this, 'R', 'Cada paso que das, por pequeño que sea, crea una huella imborrable en este mundo.')">
+            <span>R</span>
+        </div>
+        <div class="card hidden" onclick="toggleMessage(this, 'E', 'Tu corazón es un refugio lleno de amor, y cada gesto tuyo es un recordatorio de la belleza que llevas dentro.')">
+            <span>E</span>
+        </div>
+        <div class="card hidden" onclick="toggleMessage(this, 'N', 'En tus momentos de duda, recuerda que eres una obra maestra en constante creación.')">
+            <span>N</span>
+        </div>
+    </div>
+
+    <footer>
+        Siempre contigo, como el sol y la luna 🌞🌜<br>
+        <small>&copy; 2024 JJS. Todos los derechos reservados.</small>
+    </footer>
+
+    <script>
+        const correctPassword = "solyluna";
+
+        function checkPassword() {
+            const passwordInput = document.getElementById('password').value;
+            if (passwordInput === correctPassword) {
+                document.querySelector('.game-area').style.display = 'flex';
+                document.querySelector('.password-area').style.display = 'none';
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Clave incorrecta',
+                    text: 'Inténtalo de nuevo.',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        }
+
+        function toggleMessage(card, letter, message) {
+            if (card.classList.contains('revealed')) {
+                card.classList.remove('revealed');
+                card.innerHTML = `<span>${letter}</span>`;
+            } else {
+                card.classList.add('revealed');
+                card.innerHTML = message;
+            }
+            card.classList.add('clicked');
+            setTimeout(() => card.classList.remove('clicked'), 1000); // Remover el efecto de brillo después de 1 segundo
+        }
+
+        function logout() {
+            Swal.fire({
+                title: '¿Seguro que quieres cerrar sesión?',
+                text: 'Tu sesión será cerrada.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, cerrar sesión',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login.html'; // Redirigir a la página de login
+                }
+            });
+        }
+    </script>
+</body>
+</html>
