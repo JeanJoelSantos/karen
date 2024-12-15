@@ -293,7 +293,7 @@
                 card.innerHTML = message;
             }
             card.classList.add('clicked');
-            setTimeout(() => card.classList.remove('clicked'), 1000); // Remover el efecto de brillo después de 1 segundo
+            setTimeout(() => card.classList.remove('clicked'), 1000); 
         }
 
         function logout() {
@@ -307,7 +307,7 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '/login.html'; // Redirigir a la página de login
+                    window.location.href = '/login.html';
                 }
             });
         }
